@@ -2,4 +2,5 @@
 <resources>
 	<string name="hello">Hello World, Click Me!</string>
 	<string name="app_name">NetworkCall</string>
+	<color name="splash_background">#ffffff</color>
 </resources>

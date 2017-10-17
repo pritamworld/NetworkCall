@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace NetworkCall
 {
-    [Activity(Label = "NetworkCall", MainLauncher = true, Icon = "@mipmap/icon")]
+    [Activity(Label = "NetworkCall", Icon = "@mipmap/icon")]
     public class MainActivity : Activity
     {
         int count = 1;
@@ -27,23 +27,24 @@ namespace NetworkCall
             button = FindViewById<Button>(Resource.Id.myButton);
             txtData = FindViewById<TextView>(Resource.Id.textView1);
 
-            button.Click += async delegate { 
+            button.Click += async delegate
+            {
                 button.Text = $"{count++} clicks!";
-				using (var client1 = new HttpClient())
-				{
-					// send a GET request  
-					var uri = "http://jsonplaceholder.typicode.com/posts";
-					var result = await client1.GetStringAsync(uri);
+                using (var client1 = new HttpClient())
+                {
+                    // send a GET request  
+                    var uri = "http://jsonplaceholder.typicode.com/posts";
+                    var result = await client1.GetStringAsync(uri);
 
-					//handling the answer  
-					//var posts = JsonConvert.DeserializeObject<List<Post>>(result);
+                    //handling the answer  
+                    //var posts = JsonConvert.DeserializeObject<List<Post>>(result);
 
-					// generate the output  
-					//var post = posts.First();
+                    // generate the output  
+                    //var post = posts.First();
                     txtData.Text = "First post:\n\n" + result;
-				}
-			};
-           RefreshDataAsync();
+                }
+            };
+            RefreshDataAsync();
         }
 
         public async Task RefreshDataAsync()
@@ -55,22 +56,24 @@ namespace NetworkCall
             client = new HttpClient();
             //client.MaxResponseContentBufferSize = 256000;
 
-            try { 
-                    var response = await client.GetAsync(uri);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var content = await response.Content.ReadAsStringAsync();
-                        txtData.Text = content;
-                        //Items = JsonConvert.DeserializeObject<List<TodoItem>>(content);
-                         
-                    }
-            }catch(Exception ee)
+            try
             {
-                   // Debug.WriteLine(@"ERROR {0}", ee.Message);
+                var response = await client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    txtData.Text = content;
+                    //Items = JsonConvert.DeserializeObject<List<TodoItem>>(content);
+
+                }
+            }
+            catch (Exception ee)
+            {
+                // Debug.WriteLine(@"ERROR {0}", ee.Message);
                 txtData.Text = ee.Message;
             }
-  
+
+        }
     }
-}
 }
 
